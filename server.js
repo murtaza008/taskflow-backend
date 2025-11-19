@@ -4,6 +4,7 @@ import "dotenv/config"; // .env variables ko load karne ke liye dotenv/config us
 import { connectDB } from "./config/db.js"; // database connection function import kar rahe hain
 import userRouter from "./routes/userRoute.js"; // user related routes import kar rahe hain
 import taskRouter from "./routes/taskRoute.js"; // task related routes import kar rahe hain
+import serverless from "serverless-http";
 const app = express(); // express app ka instance bana rahe hain
 const PORT = process.env.PORT || 3000; // server port set kar rahe hain (env se ya default 3000)
 app.use(cors()); // CORS middleware app pe laga rahe hain
@@ -31,4 +32,6 @@ if (!process.env.VERCEL) {
   });
 }
 
-export default app;
+// Export a serverless handler for platforms like Vercel.
+const handler = serverless(app);
+export default handler;
